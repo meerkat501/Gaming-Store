@@ -1,11 +1,14 @@
+const {Game} = require('../models')
+const {Deal} = require('../models')
+
 exports.getHomePage = async (req, res) => {
-    const featuredGames = await gameModel.findFeaturedGames();
+    const featuredGames = await Game.findFeaturedGames();
     res.render('home',{ title: 'Home - Gaming Store', featuredGames });
 };
 
 exports.getCatalog = async (req, res) => {
     try {
-        const games = await gameModel.findAll();
+        const games = await Game.findAll();
         res.render('catalog', { title: 'Catalog - Gaming Store', games });
     } catch (err) {
         res.status(500).render('error', {err});
@@ -14,7 +17,7 @@ exports.getCatalog = async (req, res) => {
 
 exports.getGames = async (req, res) => {
     try{
-        const game = await gameModel.findById(req.params.id);
+        const game = await Game.findById(req.params.id);
         if (game) {
             res.render('game-details', { title: game.name, game})
         } else {
@@ -27,7 +30,7 @@ exports.getGames = async (req, res) => {
 
 exports.getDeals = async (req, res) => {
     try {
-        const deals = await deals.model.findCurrentDeals();
+        const deals = await Deal.findCurrentDeals();
         res.render('special-deals', { title: 'Special Deals', deals});
     } catch (err) {
         res.status(500).render('error', {err});
@@ -36,7 +39,7 @@ exports.getDeals = async (req, res) => {
 
 exports.getNewReleases = async (req, res) => {
     try {
-        const newReleases = await gamesModel.findNewReleases();
+        const newReleases = await Game.findNewReleases();
         res.render('new-releases', { title: 'New Releases', newReleases});
     } catch (err) {
         res.status(500).render('error', {err});
