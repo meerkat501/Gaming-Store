@@ -1,12 +1,11 @@
-const {Game} = require('../models')
-const {Deal} = require('../models')
+const {Game, Deal, Review} = require('../models')
 
-exports.getHomePage = async (req, res) => {
+router.getHomePage = async (req, res) => {
     const featuredGames = await Game.findFeaturedGames();
     res.render('home',{ title: 'Home - Gaming Store', featuredGames });
 };
 
-exports.getCatalog = async (req, res) => {
+router.getCatalog = async (req, res) => {
     try {
         const games = await Game.findAll();
         res.render('catalog', { title: 'Catalog - Gaming Store', games });
@@ -15,20 +14,27 @@ exports.getCatalog = async (req, res) => {
     }
 };
 
-exports.getGames = async (req, res) => {
-    try{
-        const game = await Game.findById(req.params.id);
+router.getGames = async (req, res) => {
+    try {
+        const gameId = req.params.id; 
+        const game = await Game.findByPk(gameId, {
+            include: [{
+                model: Review, 
+                as: 'reviews' 
+            }]
+        });
+
         if (game) {
-            res.render('game-details', { title: game.name, game})
+            res.render('game-details', { title: game.name, game, reviews: game.reviews });
         } else {
-            res.status(404).render('not-found', { title:'Not Found'})
+            res.status(404).render('not-found', { title: 'Not Found' });
         }
     } catch (err) {
-        res.status(500).render('error', {err})
+        res.status(500).render('error', { err });
     }
 };
 
-exports.getDeals = async (req, res) => {
+router.getDeals = async (req, res) => {
     try {
         const deals = await Deal.findCurrentDeals();
         res.render('special-deals', { title: 'Special Deals', deals});
@@ -37,7 +43,7 @@ exports.getDeals = async (req, res) => {
     }
 };
 
-exports.getNewReleases = async (req, res) => {
+router.getNewReleases = async (req, res) => {
     try {
         const newReleases = await Game.findNewReleases();
         res.render('new-releases', { title: 'New Releases', newReleases});
@@ -45,6 +51,5 @@ exports.getNewReleases = async (req, res) => {
         res.status(500).render('error', {err});
     }
 };
-  
 
 module.exports = router;

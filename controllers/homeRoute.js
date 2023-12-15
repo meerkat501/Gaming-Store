@@ -41,4 +41,20 @@ router.get('/new-releases', async (req, res) =>{
     } catch (err) {
         res.status(500).send(err, message);
     }
-})
+});
+
+router.post('/game/:id/review', withAuth, async (req, res) => {
+    try {
+        const gameId = req.params.id;
+        const { content, rating } = req.body;
+        const newReview = await Review.create({
+            content,
+            rating,
+            gameId 
+        });
+
+        res.redirect(`/game/${gameId}`); 
+    } catch (err) {
+        res.status(500).render('error', { err });
+    }
+});
