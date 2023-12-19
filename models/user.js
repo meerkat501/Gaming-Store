@@ -34,6 +34,7 @@ User.init({
             len: [8]
         }
     },
+}, {
     sequelize,
     timestamps: false,
     hooks: {

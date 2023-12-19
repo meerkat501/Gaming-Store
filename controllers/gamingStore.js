@@ -1,31 +1,30 @@
-const {Game, Deal, Review} = require('../models')
+const { Game, Deal } = require('../models');
 
-router.getHomePage = async (req, res) => {
-    const featuredGames = await Game.findFeaturedGames();
-    res.render('home',{ title: 'Home - Gaming Store', featuredGames });
+const gamingStoreController = {};
+
+gamingStoreController.getHomePage = async (req, res) => {
+    try {
+        const featuredGames = await Game.findFeaturedGames();
+        res.render('home', { title: 'Home - Gaming Store', featuredGames });
+    } catch (err) {
+        res.status(500).render('error', { err });
+    }
 };
 
-router.getCatalog = async (req, res) => {
+gamingStoreController.getCatalog = async (req, res) => {
     try {
         const games = await Game.findAll();
         res.render('catalog', { title: 'Catalog - Gaming Store', games });
     } catch (err) {
-        res.status(500).render('error', {err});
+        res.status(500).render('error', { err });
     }
 };
 
-router.getGames = async (req, res) => {
+gamingStoreController.getGames = async (req, res) => {
     try {
-        const gameId = req.params.id; 
-        const game = await Game.findByPk(gameId, {
-            include: [{
-                model: Review, 
-                as: 'reviews' 
-            }]
-        });
-
+        const game = await Game.findById(req.params.id);
         if (game) {
-            res.render('game-details', { title: game.name, game, reviews: game.reviews });
+            res.render('game-details', { title: game.name, game });
         } else {
             res.status(404).render('not-found', { title: 'Not Found' });
         }
@@ -34,22 +33,22 @@ router.getGames = async (req, res) => {
     }
 };
 
-router.getDeals = async (req, res) => {
+gamingStoreController.getDeals = async (req, res) => {
     try {
         const deals = await Deal.findCurrentDeals();
-        res.render('special-deals', { title: 'Special Deals', deals});
+        res.render('special-deals', { title: 'Special Deals', deals });
     } catch (err) {
-        res.status(500).render('error', {err});
+        res.status(500).render('error', { err });
     }
 };
 
-router.getNewReleases = async (req, res) => {
+gamingStoreController.getNewReleases = async (req, res) => {
     try {
         const newReleases = await Game.findNewReleases();
-        res.render('new-releases', { title: 'New Releases', newReleases});
+        res.render('new-releases', { title: 'New Releases', newReleases });
     } catch (err) {
-        res.status(500).render('error', {err});
+        res.status(500).render('error', { err });
     }
 };
 
-module.exports = router;
+module.exports = gamingStoreController;

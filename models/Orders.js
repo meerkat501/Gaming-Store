@@ -25,9 +25,10 @@ Order.init({
             key: 'id'
         },
     },
+}, {
     Sequelize,
     timestamps: true,
     modelName: 'order'
-})
+});
 
 module.exports = Order;

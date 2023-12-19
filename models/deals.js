@@ -13,7 +13,7 @@ Deal.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'game',
+            model: 'games',
             key: 'id'
         },
     },
@@ -29,7 +29,8 @@ Deal.init({
         type: DataTypes.DATE,
         allowNull: false
     },
-    sequelized,
+}, {
+    sequelize,
     timestamps: true,
     modelName: 'deal'
 });
