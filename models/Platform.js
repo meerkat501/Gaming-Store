@@ -8,6 +8,11 @@ Platform.init({
         type: DataTypes.STRING,
         allowNull: false
     }
+}, {
+    sequelize,
+    timestamps: true,
+    modelName: 'platform',
 });
+
 
 module.exports = Platform;

@@ -1,4 +1,4 @@
-const { Model, DataTypes} = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 class Game extends Model {}
@@ -32,11 +32,11 @@ Game.init({
     genre: {
         type: DataTypes.STRING,
         allowNull: false
-    }, 
-        sequelize,
-        timestamps: false,
-        modelName: 'game'
-    
+    }
+}, {
+    sequelize, 
+    modelName: 'game',
+    timestamps: false
 });
 
 module.exports = Game;

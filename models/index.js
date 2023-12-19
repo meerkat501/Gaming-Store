@@ -1,23 +1,32 @@
-const Game = require('./Game');
+const Game = require('./game');
 const Genre = require('./genre');
 const Platform = require('./platform');
 const Deal = require('./deals');
-const Review = require('./Reviews');
+const Review = require('./reviews');
+const User = require('./User');
 
-Game.belongsToMany = (Genre, {
-    through: 'GameGenre'
+Game.belongsToMany(Genre, {
+    through: 'GameGenre',
+    foreignKey: 'gameId',
+    otherKey: 'genreId'
 });
 
-Genre.belongsToMany = (Game, {
-    through: 'GameGenre'
+Genre.belongsToMany(Game, {
+    through: 'GameGenre',
+    foreignKey: 'genreId',
+    otherKey: 'gameId'
 });
 
 Game.belongsToMany(Platform, {
-    through: 'GamePlatform'
-})
+    through: 'GamePlatform',
+    foreignKey: 'gameId',
+    otherKey: 'platformId'
+});
 
 Platform.belongsToMany(Game, {
-    through: 'GamePlatform'
+    through: 'GamePlatform',
+    foreignKey: 'platformId',
+    otherKey: 'gameId'
 });
 
 Game.hasMany(Deal, {
@@ -26,7 +35,7 @@ Game.hasMany(Deal, {
 });
 
 Deal.belongsTo(Game, {
-    foreignKey: 'gameId',
+    foreignKey: 'gameId'
 });
 
 Game.hasMany(Review, {
@@ -37,5 +46,11 @@ Game.hasMany(Review, {
 Review.belongsTo(Game, {
     foreignKey: 'gameId'
 });
+User.hasMany(Review, { 
+    foreignKey: 'userId' 
+});
+Review.belongsTo(User, { 
+    foreignKey: 'userId' 
+});
 
-module.exports = {Game, Genre, Platform, Deal, Review};
+module.exports = { Game, Genre, Platform, Deal, Review, User };
