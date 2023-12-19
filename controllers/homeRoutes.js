@@ -4,14 +4,12 @@ const withAuth = require('../utils/auth');
 const { Review } = require('../models');
 
 // Route for the homepage
-router.get('/', (req, res) => {
-    const context = {
-        title: 'Welcome to Our Gaming Store',
-        description: 'Find the latest and greatest games here!',
-       
-    };
+router.get('/', withAuth, (req, res) => {
+  
+    res.render('homepage', {
+        logged_in: req.session.logged_in,
+    });
 
-    res.render('homepage', context);
 });
 
 router.post('/game/:id/review', withAuth, async (req, res) => {
@@ -31,7 +29,7 @@ router.post('/game/:id/review', withAuth, async (req, res) => {
 router.get('/login', (req, res) => {
     // If the user is already logged in, redirect the request to another route
     if (req.session.logged_in) {
-      res.redirect('/homepage');
+      res.redirect('/');
       return;
     }
   
