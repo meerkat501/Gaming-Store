@@ -1,12 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const withAuth = require('../utils/auth');
-const { Review } = require('../models');
+const { Game, Review } = require('../models');
 
 // Route for the homepage
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    const gameData = await Game.findAll();
+    console.log(gameData);
+
+    const games = gameData.map((game) => game.get({ plain: true }));
+
   
     res.render('homepage', {
+        games,
         logged_in: req.session.logged_in,
     });
 
