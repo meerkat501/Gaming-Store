@@ -4,7 +4,7 @@ const withAuth = require('../utils/auth');
 const { Review } = require('../models');
 
 // Route for the homepage
-router.get('/', withAuth, (req, res) => {
+router.get('/', (req, res) => {
   
     res.render('homepage', {
         logged_in: req.session.logged_in,
