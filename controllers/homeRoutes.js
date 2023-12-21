@@ -18,6 +18,24 @@ router.get('/', async (req, res) => {
 
 });
 
+router.get('/game/action', async (req, res) => {
+    const gameData = await Game.findAll();
+    console.log(gameData);
+
+    const games = gameData.filter((game) => {
+        console.log(game);
+        game.genre === "Adventure"
+        game.get({ plain: true })
+    }
+  );
+
+  
+    res.render('homepage', {
+        games,
+        logged_in: req.session.logged_in,
+    });
+  });
+
 router.post('/game/:id/review', withAuth, async (req, res) => {
     try {
         const { content, rating } = req.body;
