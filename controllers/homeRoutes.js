@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const withAuth = require('../utils/auth');
-const { Game, Review } = require('../models');
+const { Game, Review, User } = require('../models');
 
 // Route for the homepage
 router.get('/', async (req, res) => {
@@ -17,6 +17,24 @@ router.get('/', async (req, res) => {
     });
 
 });
+
+router.get('/wishlist', async (req, res) => {
+    try {
+        // Find the logged in user based on the session ID
+        const userData = await User.findByPk(req.session.user_id, {
+          attributes: { exclude: ['password'] }
+        });
+    
+        const user = userData.get({ plain: true });
+    
+        res.render('wishlist', {
+          ...user,
+          logged_in: true
+        });
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    });
 
 router.get('/game/action', async (req, res) => {
     const gameData = await Game.findAll();
