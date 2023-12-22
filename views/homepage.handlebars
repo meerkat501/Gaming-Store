@@ -4,7 +4,7 @@
             <div id="sidebar" class="collapse collapse-horizontal show border-end">
                 <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
                     <span class="text-center" id="categoryText">Categories</span>
-                    <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-controller"></i> <span>Action</span></a>
+                    <a href="/game/action" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-controller"></i> <span>Action</span></a>
                     <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-controller"></i> <span>RPG</span></a>
                     <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-controller"></i> <span>Shooter</span></a>
                     <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><i class="bi bi-controller"></i> <span>Sports</span></a>
@@ -16,21 +16,21 @@
             <div class="page-header pt-3">
                 <h2>Gamestore Site - Reseller for Innovative Gaming</h2>
             </div>
-            <p class="lead">Test template of site pitch.</p>
+            <p class="lead">Find a product that you want to purchase or save for later!</p>
             <hr>
              <hr>
         <div class="row">
           {{#each games as |game| }}
           <div class="col-3">
             <div class="card mt-3" style="width: 18rem;">
-              <img src="https://m.media-amazon.com/images/M/MV5BYjEzMTM4ZmQtZTEzYS00ZGVmLTkwM2EtNWNmMDI4OWQ0MjBmXkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_.jpg" class="card-img-top" alt="Game Image">
+              <img src="https://www.svgrepo.com/show/508699/landscape-placeholder.svg" class="card-img-top" alt="Game Image">
               <div class="card-body">
                 <h5 class="card-title">{{game.title}}</h5>
                 <p class="card-text">{{game.description}}</p>
                 <p class="card-text">Genre: {{game.genre}}</p>
                 <p class="card-text">Platform: {{game.platform}}</p>
-                  <p class="card-text fw-bold text-danger">{{game.price}}</p>
-                <button class="btn btn-primary btn-danger" data-cart-add="12345678">Add to Wishlist</button>
+                  <p class="card-text fw-bold text-danger">${{game.price}}</p>
+                <button class="btn btn-primary btn-danger" data-id="{{game.id}}">Add to Wishlist</button>
               </div>
             </div>
           </div>
@@ -90,3 +90,7 @@
         </div>
     </div>
 </div>
+
+
+
+

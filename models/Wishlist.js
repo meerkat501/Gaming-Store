@@ -1,23 +1,38 @@
-module.exports = (sequelize, DataTypes) => {
-    const Wishlist = sequelize.define('Wishlist', {
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      gameId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      }
-    });
-  
-    Wishlist.associate = function(models) {
+// const { Model, DataTypes } = require('sequelize');
+// const sequelize = require('../config/connection');
 
-      Wishlist.belongsTo(models.User, { 
-        foreignKey: 'userId' });
-        
-      Wishlist.belongsTo(models.Game, { 
-        foreignKey: 'gameId' });
-    };
-  
-    return Wishlist;
-  };
+// class Wishlist extends Model {}
+
+// Wishlist.init(
+//   {
+//     id: {
+//       type: DataTypes.INTEGER,
+//       allowNull: false,
+//       primaryKey: true,
+//       autoIncrement: true,
+//     },
+//     game_id: {
+//       type: DataTypes.INTEGER,
+//       references: {
+//         model: 'game',
+//         key: 'id',
+//       },
+//     },
+//     user_id: {
+//       type: DataTypes.INTEGER,
+//       references: {
+//         model: 'user',
+//         key: 'id',
+//       },
+//     },
+//   },
+//   {
+//     sequelize,
+//     timestamps: false,
+//     freezeTableName: true,
+//     underscored: true,
+//     modelName: 'wishlist',
+//   }
+// );
+
+// module.exports = Wishlist;

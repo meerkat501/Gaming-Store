@@ -1,54 +1,44 @@
 // routes/wishlist.js
 
 const express = require('express');
-
 const router = express.Router();
-
-const { Wishlist, Game } = require('../models');
-
-const { withAuth } = require('../utils/auth'); // Authentication middleware
+const withAuth = require('../utils/auth');
+const { Game, Wishlist, User } = require('../models');
 
 // Get wishlist for a user
 
-router.get('/', withAuth, async (req, res) => {
-
+router.get('/profile', withAuth, async (req, res) => {
   try {
-    const wishlist = await Wishlist.findAll({
-
-      where: { userId: req.session.userId },
-
-      include: [{ model: Game }]
-
+    // Find the logged in user based on the session ID
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: Wishlist }],
     });
 
-    res.json(wishlist);
+    const user = userData.get({ plain: true });
 
-  } catch (error) {
-
-    res.status(500).json({ message: 'Error getting wishlist', error });
-
+    res.render('profile', {
+      ...user,
+      logged_in: true
+    });
+  } catch (err) {
+    res.status(500).json(err);
   }
-
 });
 
 // Add a game to the wishlist
 
 router.post('/add', withAuth, async (req, res) => {
-
   try {
+    const newWishlist = await Wishlist.create({
+      ...req.body,
+      user_id: req.session.user_id,
+    });
 
-    const { gameId } = req.body;
-
-    await Wishlist.create({ userId: req.session.userId, gameId });
-
-    res.json({ message: 'Game added to wishlist' });
-
-  } catch (error) {
-
-    res.status(500).json({ message: 'Error adding to wishlist', error });
-
+    res.status(200).json(newWishlist);
+  } catch (err) {
+    res.status(400).json(err);
   }
-
 });
 
 // Remove a game from the wishlist

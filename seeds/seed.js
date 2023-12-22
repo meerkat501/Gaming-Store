@@ -16,7 +16,31 @@ const gameData = [
         releaseDate: new Date(),
         platform: "PS5",
         genre: "Adventure"
+    },
+    {
+        title: "Game 3",
+        description: "Description",
+        price: 59.99,
+        releaseDate: new Date(),
+        platform: "PS5",
+        genre: "Shooter"
+    },{
+        title: "Game 4",
+        description: "Description",
+        price: 79.99,
+        releaseDate: new Date(),
+        platform: "PS5",
+        genre: "Sports"
     }
+    ,{
+        title: "Game 5",
+        description: "Description",
+        price: 60.00,
+        releaseDate: new Date(),
+        platform: "PS5",
+        genre: "Shooter"
+    }
+
    
 ];
 
